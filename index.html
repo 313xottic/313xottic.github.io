@@ -36,24 +36,29 @@
       background: #111111;
       border: 1px solid #333333;
       border-radius: 12px;
-      padding: 25px 30px;
+      padding: 20px 25px;
       max-width: 90%;
       width: 100%;
       box-sizing: border-box;
+      min-height: 140px;
       display: flex;
       align-items: center;
       justify-content: center;
-      min-height: 120px; /* Ensures space even for short codes */
       text-align: center;
+      overflow: hidden; /* Prevent any overflow */
     }
     #code {
       margin: 0;
+      padding: 0;
       font-family: monospace;
-      font-size: 1.4em;
+      font-size: clamp(1.1em, 3vw, 1.4em); /* Responsive size */
       color: #00ff88;
-      word-break: break-all;
+      word-break: break-all; /* Break very long codes */
+      overflow-wrap: break-word; /* Modern alternative to word-break */
+      hyphens: auto;
       line-height: 1.4;
       max-width: 100%;
+      text-align: center;
     }
     .copy-btn {
       margin-top: 30px;
@@ -97,7 +102,7 @@
 
     function copyCode() {
       navigator.clipboard.writeText(codeElement.textContent);
-      // Silent copy - no alert
+      // Silent copy - no alert or popup
     }
   </script>
 </body>
