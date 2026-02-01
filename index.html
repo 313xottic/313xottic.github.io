@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>eBay Auth Complete</title>
   <style>
     html, body {
@@ -18,69 +18,77 @@
       align-items: center;
       justify-content: center;
       text-align: center;
+      touch-action: manipulation; /* Better touch experience on mobile */
     }
     h1 {
       margin: 0 0 20px 0;
-      font-size: clamp(1.8em, 5vw, 2.2em);
+      font-size: clamp(1.8em, 6vw, 2.4em);
     }
     p {
-      margin: 0 0 30px 0;
-      font-size: clamp(1em, 4vw, 1.2em);
-      max-width: 90%;
+      margin: 0 0 25px 0;
+      font-size: clamp(1em, 4.2vw, 1.15em);
+      max-width: 92%;
+      line-height: 1.4;
     }
     h3 {
-      margin: 0 0 15px 0;
-      font-size: clamp(1.4em, 4.5vw, 1.6em);
+      margin: 0 0 12px 0;
+      font-size: clamp(1.3em, 5vw, 1.6em);
     }
     #code-container {
       background: #111111;
       border: 1px solid #333333;
       border-radius: 12px;
-      padding: 20px 25px;
-      max-width: 95%;
+      padding: clamp(16px, 5vw, 20px) clamp(20px, 6vw, 25px);
+      margin: 0 10px;
+      max-width: 94%;
       width: fit-content;
-      min-width: 80%;
       box-sizing: border-box;
       display: flex;
       align-items: center;
       justify-content: center;
       text-align: center;
+      min-height: 100px;
       overflow: hidden;
     }
     #code {
       margin: 0;
       padding: 0;
       font-family: monospace;
-      font-size: clamp(1.1em, 3.5vw, 1.4em);
+      font-size: clamp(1.05em, 3.8vw, 1.35em);
       color: #00ff88;
       word-break: break-all;
       overflow-wrap: break-word;
       hyphens: auto;
-      line-height: 1.4;
+      line-height: 1.45;
       text-align: center;
       width: 100%;
     }
     .copy-btn {
       margin-top: 30px;
-      padding: clamp(12px, 4vw, 14px) clamp(30px, 8vw, 40px);
+      padding: clamp(12px, 4vw, 14px) clamp(32px, 8vw, 44px);
       background: #0066cc;
       color: white;
       border: none;
       border-radius: 8px;
-      font-size: clamp(1em, 4vw, 1.2em);
+      font-size: clamp(1em, 4.5vw, 1.2em);
       cursor: pointer;
       transition: background 0.2s;
     }
-    .copy-btn:hover {
+    .copy-btn:hover,
+    .copy-btn:active {
       background: #0052a3;
     }
+
     @media (max-width: 480px) {
+      body {
+        padding: 20px 10px;
+      }
       #code-container {
-        padding: 15px 20px;
-        min-width: 90%;
+        padding: 16px 20px;
+        min-height: 90px;
       }
       #code {
-        font-size: clamp(1em, 4vw, 1.2em);
+        font-size: clamp(0.95em, 4.2vw, 1.15em);
       }
     }
   </style>
