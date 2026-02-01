@@ -26,8 +26,8 @@
     }
     p {
       margin: 0 0 clamp(20px, 5vw, 25px) 0;
-      font-size: clamp(0.9em, 3.8vw, 1.1em);
-      max-width: 90%;
+      font-size: clamp(0.9em, 3.8vw, 1.15em);
+      max-width: 92%;
       line-height: 1.4;
     }
     h3 {
@@ -49,6 +49,7 @@
       text-align: center;
       min-height: clamp(80px, 20vw, 120px);
       overflow: hidden;
+      overflow-x: auto; /* Allow horizontal scroll if absolutely needed, but prevent with wrapping */
     }
     #code {
       margin: 0;
@@ -63,6 +64,7 @@
       text-align: center;
       width: 100%;
       max-width: 100%;
+      white-space: pre-wrap; /* Extra wrap for long lines */
     }
     .copy-btn {
       margin-top: clamp(20px, 5vw, 30px);
