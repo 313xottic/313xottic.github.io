@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>eBay Auth Complete</title>
   <style>
+    * {
+      box-sizing: border-box;
+    }
     html, body {
       height: 100%;
       margin: 0;
@@ -18,43 +21,52 @@
       align-items: center;
       justify-content: center;
       text-align: center;
-      touch-action: manipulation; /* Better touch experience on mobile */
+      touch-action: manipulation;
+    }
+    .content-wrapper {
+      width: 100%;
+      max-width: 100%;
+      padding: 20px 15px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
     }
     h1 {
-      margin: 0 0 20px 0;
-      font-size: clamp(1.8em, 6vw, 2.4em);
+      margin: 0;
+      font-size: clamp(1.6em, 7vw, 2.2em);
+      line-height: 1.2;
     }
     p {
-      margin: 0 0 25px 0;
-      font-size: clamp(1em, 4.2vw, 1.15em);
-      max-width: 92%;
+      margin: 0;
+      font-size: clamp(0.95em, 4.2vw, 1.1em);
       line-height: 1.4;
+      max-width: 92%;
     }
     h3 {
-      margin: 0 0 12px 0;
-      font-size: clamp(1.3em, 5vw, 1.6em);
+      margin: 10px 0 8px 0;
+      font-size: clamp(1.2em, 5.5vw, 1.5em);
     }
     #code-container {
       background: #111111;
       border: 1px solid #333333;
-      border-radius: 12px;
-      padding: clamp(16px, 5vw, 20px) clamp(20px, 6vw, 25px);
-      margin: 0 10px;
-      max-width: 94%;
-      width: fit-content;
-      box-sizing: border-box;
+      border-radius: 10px;
+      padding: 18px 22px;
+      width: 92%;
+      max-width: 92%;
+      min-height: 80px;
       display: flex;
       align-items: center;
       justify-content: center;
       text-align: center;
-      min-height: 100px;
       overflow: hidden;
     }
     #code {
-      margin: 0;
+      margin: 0 auto;
       padding: 0;
       font-family: monospace;
-      font-size: clamp(1.05em, 3.8vw, 1.35em);
+      font-size: clamp(1em, 3.8vw, 1.25em);
       color: #00ff88;
       word-break: break-all;
       overflow-wrap: break-word;
@@ -62,17 +74,18 @@
       line-height: 1.45;
       text-align: center;
       width: 100%;
+      max-width: 100%;
     }
     .copy-btn {
-      margin-top: 30px;
-      padding: clamp(12px, 4vw, 14px) clamp(32px, 8vw, 44px);
+      padding: clamp(12px, 5vw, 14px) clamp(30px, 10vw, 40px);
       background: #0066cc;
       color: white;
       border: none;
       border-radius: 8px;
-      font-size: clamp(1em, 4.5vw, 1.2em);
+      font-size: clamp(1em, 4.5vw, 1.15em);
       cursor: pointer;
       transition: background 0.2s;
+      touch-action: manipulation;
     }
     .copy-btn:hover,
     .copy-btn:active {
@@ -80,30 +93,33 @@
     }
 
     @media (max-width: 480px) {
-      body {
-        padding: 20px 10px;
+      .content-wrapper {
+        padding: 15px 10px;
+        gap: 15px;
       }
       #code-container {
-        padding: 16px 20px;
-        min-height: 90px;
+        padding: 15px 18px;
+        width: 96%;
       }
       #code {
-        font-size: clamp(0.95em, 4.2vw, 1.15em);
+        font-size: clamp(0.95em, 4.2vw, 1.1em);
       }
     }
   </style>
 </head>
 <body>
-  <h1>Authorization Successfully Completed!</h1>
-  
-  <p>Paste this code into Discord using the <strong>"Submit Authorization Code"</strong> button.</p>
-  
-  <h3>Authorization Code:</h3>
-  <div id="code-container">
-    <pre id="code">Loading...</pre>
-  </div>
+  <div class="content-wrapper">
+    <h1>Authorization Successfully Completed!</h1>
+    
+    <p>Paste this code into Discord using the <strong>"Submit Authorization Code"</strong> button.</p>
+    
+    <h3>Authorization Code:</h3>
+    <div id="code-container">
+      <pre id="code">Loading...</pre>
+    </div>
 
-  <button class="copy-btn" onclick="copyCode()">Copy Code</button>
+    <button class="copy-btn" onclick="copyCode()">Copy Code</button>
+  </div>
 
   <script>
     const params = new URLSearchParams(window.location.search);
@@ -119,7 +135,7 @@
 
     function copyCode() {
       navigator.clipboard.writeText(codeElement.textContent);
-      // Silent copy - no popup/alert
+      // Silent copy
     }
   </script>
 </body>
