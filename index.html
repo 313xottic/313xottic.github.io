@@ -18,39 +18,29 @@
       align-items: center;
       justify-content: center;
       text-align: center;
-      touch-action: manipulation; /* Better touch experience on mobile */
+      touch-action: manipulation;
     }
-    h1 {
-      margin: 0 0 clamp(15px, 4vw, 20px) 0;
-      font-size: clamp(1.6em, 6vw, 2.2em);
-    }
-    p {
-      margin: 0 0 clamp(20px, 5vw, 25px) 0;
-      font-size: clamp(0.9em, 3.8vw, 1.15em);
-      max-width: 92%;
-      line-height: 1.4;
-    }
-    h3 {
-      margin: 0 0 clamp(10px, 3vw, 15px) 0;
-      font-size: clamp(1.2em, 4.5vw, 1.5em);
-    }
+
+    h1 { margin: 0 0 clamp(15px, 4vw, 20px) 0; font-size: clamp(1.6em, 6vw, 2.2em); }
+    p { margin: 0 0 clamp(20px, 5vw, 25px) 0; font-size: clamp(0.9em, 3.8vw, 1.15em); max-width: 92%; line-height: 1.4; }
+    h3 { margin: 0 0 clamp(10px, 3vw, 15px) 0; font-size: clamp(1.2em, 4.5vw, 1.5em); }
+
     #code-container {
       background: #111111;
       border: 1px solid #333333;
       border-radius: 12px;
       padding: clamp(15px, 4vw, 20px) clamp(20px, 5vw, 25px);
       margin: 0 clamp(5px, 2vw, 10px);
-      max-width: 94vw; /* Max 94% of viewport width */
+      max-width: 94vw;
       width: fit-content;
       box-sizing: border-box;
       display: flex;
       align-items: center;
       justify-content: center;
-      text-align: center;
       min-height: clamp(80px, 20vw, 120px);
       overflow: hidden;
-      overflow-x: auto; /* Allow horizontal scroll if absolutely needed, but prevent with wrapping */
     }
+
     #code {
       margin: 0;
       padding: 0;
@@ -59,13 +49,11 @@
       color: #00ff88;
       word-break: break-all;
       overflow-wrap: break-word;
-      hyphens: auto;
       line-height: 1.45;
-      text-align: center;
       width: 100%;
-      max-width: 100%;
-      white-space: pre-wrap; /* Extra wrap for long lines */
+      white-space: pre-wrap;
     }
+
     .copy-btn {
       margin-top: clamp(20px, 5vw, 30px);
       padding: clamp(10px, 3.5vw, 12px) clamp(25px, 7vw, 35px);
@@ -77,41 +65,54 @@
       cursor: pointer;
       transition: background 0.2s;
     }
+
     .copy-btn:hover,
     .copy-btn:active {
       background: #0052a3;
     }
 
+    /* Feedback Message */
+    #copy-feedback {
+      margin-top: 12px;
+      font-size: clamp(0.9em, 3.5vw, 1em);
+      font-weight: bold;
+      color: #00ff88;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      min-height: 1.4em; /* Prevents layout shift */
+    }
+
+    #copy-feedback.show {
+      opacity: 1;
+    }
+
     @media (max-width: 480px) {
-      body {
-        padding: clamp(15px, 5vw, 20px) clamp(8px, 3vw, 10px);
-      }
-      #code-container {
-        padding: clamp(12px, 4vw, 16px) clamp(15px, 5vw, 20px);
-        min-height: clamp(70px, 25vw, 100px);
-      }
-      #code {
-        font-size: clamp(0.85em, 3.8vw, 1.1em);
-      }
+      body { padding: clamp(15px, 5vw, 20px) clamp(8px, 3vw, 10px); }
+      #code-container { padding: clamp(12px, 4vw, 16px) clamp(15px, 5vw, 20px); }
+      #code { font-size: clamp(0.85em, 3.8vw, 1.1em); }
     }
   </style>
 </head>
 <body>
   <h1>Authorization Successfully Completed!</h1>
-  
+ 
   <p>Paste this code into Discord using the <strong>"Submit Authorization Code"</strong> button.</p>
-  
+ 
   <h3>Authorization Code:</h3>
   <div id="code-container">
     <pre id="code">Loading...</pre>
   </div>
 
   <button class="copy-btn" onclick="copyCode()">Copy Code</button>
+  
+  <!-- Feedback Message -->
+  <div id="copy-feedback">Copied!</div>
 
   <script>
     const params = new URLSearchParams(window.location.search);
     const code = params.get('code');
     const codeElement = document.getElementById('code');
+    const feedback = document.getElementById('copy-feedback');
 
     if (code) {
       codeElement.textContent = code;
@@ -121,8 +122,25 @@
     }
 
     function copyCode() {
-      navigator.clipboard.writeText(codeElement.textContent);
-      // Silent copy - no popup/alert
+      if (!codeElement.textContent || codeElement.textContent === 'Loading...') return;
+
+      navigator.clipboard.writeText(codeElement.textContent).then(() => {
+        // Show feedback
+        feedback.textContent = "Copied!";
+        feedback.style.color = "#00ff88";
+        feedback.classList.add('show');
+
+        // Hide feedback after 2 seconds
+        setTimeout(() => {
+          feedback.classList.remove('show');
+        }, 2000);
+      }).catch(err => {
+        console.error('Copy failed:', err);
+        feedback.textContent = "Failed to copy";
+        feedback.style.color = "#ff5555";
+        feedback.classList.add('show');
+        setTimeout(() => feedback.classList.remove('show'), 2000);
+      });
     }
   </script>
 </body>
